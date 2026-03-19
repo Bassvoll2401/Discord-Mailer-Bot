@@ -1,4 +1,11 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
 export default function ChannelSidebar() {
+  const pathname = usePathname();
+
   return (
     <div className="w-64 bg-[#2B2D31] flex flex-col h-screen shrink-0 text-gray-300 border-r border-[#1E1F22]/40 shadow-sm z-40">
       {/* Server Header */}
@@ -21,16 +28,20 @@ export default function ChannelSidebar() {
           </div>
 
           <div className="space-y-[3px]">
-            <div className="flex items-center px-2 py-1.5 rounded-md bg-[#3F4147]/60 text-white cursor-pointer group">
-              <span className="text-gray-400 text-lg mr-2 italic font-light">#</span>
-              <span className="truncate font-medium">general</span>
-            </div>
+            <Link href="/">
+              <div className={`flex items-center px-2 py-1.5 rounded-md cursor-pointer group transition-colors duration-150 ${pathname === '/' ? 'bg-[#3F4147]/60 text-white' : 'hover:bg-[#35373C] hover:text-gray-100'}`}>
+                <span className={`text-lg mr-2 italic font-light ${pathname === '/' ? 'text-gray-400' : 'text-gray-500 group-hover:text-gray-400'}`}>#</span>
+                <span className={`truncate font-medium ${pathname === '/' ? 'text-white' : 'text-gray-400 group-hover:text-gray-200'}`}>general</span>
+              </div>
+            </Link>
 
             {['development', 'help', 'off-topic'].map(channel => (
-              <div key={channel} className="flex items-center px-2 py-1.5 rounded-md hover:bg-[#35373C] hover:text-gray-100 cursor-pointer group transition-colors duration-150">
-                <span className="text-gray-500 text-lg mr-2 italic font-light group-hover:text-gray-400">#</span>
-                <span className="truncate font-medium text-gray-400 group-hover:text-gray-200">{channel}</span>
-              </div>
+              <Link href="/" key={channel}>
+                <div className="flex items-center px-2 py-1.5 rounded-md hover:bg-[#35373C] hover:text-gray-100 cursor-pointer group transition-colors duration-150">
+                  <span className="text-gray-500 text-lg mr-2 italic font-light group-hover:text-gray-400">#</span>
+                  <span className="truncate font-medium text-gray-400 group-hover:text-gray-200">{channel}</span>
+                </div>
+              </Link>
             ))}
           </div>
         </div>
@@ -46,12 +57,14 @@ export default function ChannelSidebar() {
 
           <div className="space-y-[3px]">
             {['Lobby', 'Gaming', 'AFK'].map(channel => (
-              <div key={channel} className="flex items-center px-2 py-1.5 rounded-md hover:bg-[#35373C] hover:text-gray-100 cursor-pointer group transition-colors duration-150">
-                <svg className="w-[18px] h-[18px] mr-2 text-gray-500 group-hover:text-gray-400" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M13.5 11c0-1.93-1.57-3.5-3.5-3.5S6.5 9.07 6.5 11v3c0 1.93 1.57 3.5 3.5 3.5s3.5-1.57 3.5-3.5v-3zM10 20c3.87 0 7-3.13 7-7v-3c0-3.87-3.13-7-7-7s-7 3.13-7 7v3c0 3.87 3.13 7 7 7zm6-7c0 3.31-2.69 6-6 6s-6-2.69-6-6h2c0 2.21 1.79 4 4 4s4-1.79 4-4h2z" />
-                </svg>
-                <span className="truncate font-medium text-gray-400 group-hover:text-gray-200">{channel}</span>
-              </div>
+              <Link href="/voice" key={channel}>
+                <div className={`flex items-center px-2 py-1.5 rounded-md cursor-pointer group transition-colors duration-150 ${pathname === '/voice' && channel === 'Lobby' ? 'bg-[#3F4147]/60 text-white' : 'hover:bg-[#35373C] hover:text-gray-100'}`}>
+                  <svg className={`w-[18px] h-[18px] mr-2 ${pathname === '/voice' && channel === 'Lobby' ? 'text-gray-300' : 'text-gray-500 group-hover:text-gray-400'}`} viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M13.5 11c0-1.93-1.57-3.5-3.5-3.5S6.5 9.07 6.5 11v3c0 1.93 1.57 3.5 3.5 3.5s3.5-1.57 3.5-3.5v-3zM10 20c3.87 0 7-3.13 7-7v-3c0-3.87-3.13-7-7-7s-7 3.13-7 7v3c0 3.87 3.13 7 7 7zm6-7c0 3.31-2.69 6-6 6s-6-2.69-6-6h2c0 2.21 1.79 4 4 4s4-1.79 4-4h2z" />
+                  </svg>
+                  <span className={`truncate font-medium ${pathname === '/voice' && channel === 'Lobby' ? 'text-white' : 'text-gray-400 group-hover:text-gray-200'}`}>{channel}</span>
+                </div>
+              </Link>
             ))}
           </div>
         </div>
